@@ -7,7 +7,8 @@ from datetime import datetime, timedelta
 st.title("JP's Currency Tracker")
 st.markdown('Crafted with ♥️ by your favourite **Data Scientist**.')
 
-data = pd.read_csv('https://gist.githubusercontent.com/janduplessis883/e7b834c8293745ddc92b7a1fc57af9c0/raw/currency_rates.csv', parse_dates=['Timestamp'])
+# Correctly parse the Timestamp column with dayfirst=True
+data = pd.read_csv('https://gist.githubusercontent.com/janduplessis883/e7b834c8293745ddc92b7a1fc57af9c0/raw/currency_rates.csv', parse_dates=['Timestamp'], dayfirst=True)
 
 option = st.slider('Display no of rows', 1, 10, 1)
 st.write(data.tail(option))
