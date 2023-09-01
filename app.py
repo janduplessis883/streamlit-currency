@@ -7,16 +7,28 @@ from datetime import datetime, timedelta
 st.title("JP's Currency Tracker")
 st.markdown('Crafted with ♥️ by your favourite **Data Scientist**.')
 
+
+
 # Correctly parse the Timestamp column with dayfirst=True
 data = pd.read_csv('https://gist.githubusercontent.com/janduplessis883/e7b834c8293745ddc92b7a1fc57af9c0/raw/currency_rates.csv', parse_dates=['Timestamp'], dayfirst=True)
 
 option = st.slider('Display no of rows', 1, 10, 1)
 st.write(data.tail(option))
 
-st.markdown(" EUR | BGP & EUR | USD")
+metric = data.tail(1)
+
+col1, col2 = st.columns(2)
+col1.metric("Euro - GBP", metric['GBP'])
+col2.metric("Euro - USD", metric['USD'])
+
 
 # Dropdown for selecting time range
 time_options = {
+    "Last Day": 1,
+    "Last 2 Day": 2,
+    "Last 3 Day": 3,
+    "Last 4 Day": 4,
+    "Last 5 Day": 5,
     "Last Week": 7,
     "Last 2 Weeks": 14,
     "Last 3 Weeks": 21,
@@ -24,6 +36,7 @@ time_options = {
     "Last 6 Weeks": 42,
     "All": None
 }
+
 
 selected_time = st.selectbox("Select Time Range", list(time_options.keys()))
 
